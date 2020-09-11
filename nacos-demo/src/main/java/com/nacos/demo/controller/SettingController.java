@@ -1,6 +1,7 @@
 package com.nacos.demo.controller;
 
 import com.nacos.demo.config.TestConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,9 @@ import javax.annotation.Resource;
 
 @RefreshScope
 @Controller
+@Slf4j
 @RequestMapping("/data")
-public class DemoController {
+public class SettingController {
 
     @Value("${msg}")
     private String msg;
@@ -38,6 +40,12 @@ public class DemoController {
     @ResponseBody
     public String msg() {
         return msg;
+    }
+
+    @GetMapping("/echo")
+    @ResponseBody
+    public String echo(TestConfig config) {
+        return config.getId() + "=" + config.getName();
     }
 
 }
